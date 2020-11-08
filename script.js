@@ -2,7 +2,7 @@
 var startEl = document.querySelector("#start");
 secondsLeft = 15;
 
- var questions = [
+var questions = [
     {
         question: "Which of these is a string?",
         choices: ["true","1","'variable'"],
@@ -28,7 +28,7 @@ secondsLeft = 15;
         choices: ["quotes","curly brackets","parentheses","square brackets"],
         answer: "parentheses"
     }
- ]
+];
 
 // Timer function
 
@@ -40,10 +40,7 @@ function setTime() {
             clearInterval(timerInterval);
         }
     }, 1000);
-}
+};
 
 // use on click
-startEl.addEventListener("click", function() {
-    console.log("Hi");
     setTime();
-});
