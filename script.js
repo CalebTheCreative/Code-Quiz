@@ -1,8 +1,23 @@
 // Veriables
 var startEl = document.querySelector("#start");
-secondsLeft = 15;
+var timerEl = document.querySelector("#time");
+var quizEl = document.querySelector("#quiz");
+var scoreEl = document.querySelector("#score");
+secondsLeft = 30;
 
-var questions = [
+function setTime() {
+    var timerInterval = setInterval(function () {
+        timerEl.textContent = "Time: " + secondsLeft;
+        secondsLeft--;
+        console.log(secondsLeft);
+        if(secondsLeft === 0) {
+            clearInterval(timerInterval);
+        }
+    }, 1000);
+};
+
+
+var questionsList = [
     {
         question: "Which of these is a string?",
         choices: ["true","1","'variable'"],
@@ -29,18 +44,6 @@ var questions = [
         answer: "parentheses"
     }
 ];
-
-// Timer function
-
-function setTime() {
-    var timerInterval = setInterval(function () {
-        secondsLeft--;
-        console.log(secondsLeft);
-        if(secondsLeft === 0) {
-            clearInterval(timerInterval);
-        }
-    }, 1000);
-};
 
 // use on click
     setTime();
