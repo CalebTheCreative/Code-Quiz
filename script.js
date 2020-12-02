@@ -1,49 +1,151 @@
-// Veriables
-var startEl = document.querySelector("#start");
-var timerEl = document.querySelector("#time");
-var quizEl = document.querySelector("#quiz");
-var scoreEl = document.querySelector("#score");
-secondsLeft = 30;
+// Veriables to grab info from HTML
+var startBtnEl = document.querySelector("#startBtn");
+var timerEl = document.querySelector("#timer");
+var questionInfo = document.querySelector("#questionInfo");
+var choicesInfo = document.querySelector("#choicesInfo");
+var answerStatusDisplayEl = document.querySelector("#answerStatusDisplay");
+var finalScoreEl = document.querySelector("#finalScore");
+var startBox = document.querySelector("#startContainer");
+var quizBox = document.querySelector("#quizContainer");
+var endBox = document.querySelector("#endContainer");
+var initialsBtn = document.querySelector("#initialsBtn");
+var leaderBoardList = document.querySelector("#leaderBoardList");
+var resetResultsBtn = document.querySelector("#resetResultsBtn");
 
-function setTime() {
-    var timerInterval = setInterval(function () {
-        timerEl.textContent = "Time: " + secondsLeft;
+// Creates empty array for leaderBoard
+var leaderBoard = JSON.parse(localStorage.getItem("leaderBoard") || "[]");
+
+// JS Variables
+var currentScore = 0;
+var secondsLeft = 30;
+var correctChoice;
+var qNum = -1;
+var initialEntry;
+
+// Make Start Button Start the Game
+startBtnEl.addEventListener("click", startQuiz);
+
+
+function startQuiz() {
+
+    // Change Container Display to quizBox
+    startBox.classList.add("d-none");
+    quizBox.classList.remove("d-none");
+
+    // Start the timer and display questions
+    beginTimer();
+    displayQuestions();
+}
+
+// Timer
+function beginTimer() {
+
+    var countdown = setInterval(function () {
         secondsLeft--;
-        console.log(secondsLeft);
-        if(secondsLeft === 0) {
-            clearInterval(timerInterval);
+        timerEl.textContent = "Time: " + secondsLeft;
+
+        if (secondsLeft === 0 || qNum === questionsList.length) {
+            endGame();
+            clearInterval(countdown);
         }
     }, 1000);
-};
+}
 
+function displayQuestions() {
+    // cycles through the questions
+    qNum++;
+    choicesInfo.innerHTML = "";
+    // Grabs the correct question from the questionsList array
+    questionInfo.textContent = questionsList[qNum].question;
 
-var questionsList = [
-    {
-        question: "Which of these is a string?",
-        choices: ["true","1","'variable'"],
-        answer: "'variable'"
-    },
-     {
-        question: "Which programming language is for making your application interactive?",
-        choices: ["HTML","CSS","JavaScript","Notepad"],
-        answer: "JavaScript"
-    },
-    {
-        question: "What is an example of a semantic tag?",
-        choices: ["img","nav","div","h1"],
-        answer: "nav"
-    },
-    {
-        question: "Which of these is a Boolean value?",
-        choices: ["true","1","'variable'"],
-        answer: "true"
-    },
-    {
-        question: "The condition in an if / else statement must be enclosed within _______",
-        choices: ["quotes","curly brackets","parentheses","square brackets"],
-        answer: "parentheses"
+    // Grabs the correct choices
+    var quizChoices = questionsList[qNum].choices;
+
+    for (var c = 0; c < quizChoices.length; c++) {
+        var eachChoice = document.createElement("button");
+        eachChoice.textContent = quizChoices[c];
+        choicesInfo.appendChild(eachChoice).setAttribute("class", "btn btn-block");
     }
-];
 
-// use on click
-    setTime();
+    // Grabs the correct answer for the questionsList array
+    correctChoice = questionsList[qNum].answer;
+
+
+}
+
+choicesInfo.addEventListener("click", function (event) {
+    answerStatusDisplayEl
+
+    if (correctChoice === event.target.textContent) {
+        answerStatusDisplayEl.innerHTML = "correct";
+        setTimeout(hideAnswer, 1500);
+        showAnswer();
+        currentScore++;
+    }
+
+    else {
+        answerStatusDisplayEl.innerHTML = "incorrect";
+        setTimeout(hideAnswer, 1500);
+        showAnswer();
+        secondsLeft = secondsLeft - 5;
+    }
+    displayQuestions();
+})
+
+// Changes display of right or wrong answer
+function showAnswer() {
+    answerStatusDisplayEl.classList.remove("d-none");
+}
+
+function hideAnswer() {
+    answerStatusDisplayEl.classList.add("d-none");
+}
+
+
+function endGame() {
+    quizBox.classList.add("d-none");
+    endBox.classList.remove("d-none");
+    finalScoreEl.textContent = currentScore;
+}
+
+initialsBtn.addEventListener("click", function () {
+    createHighScore();
+    window.location.href = "index.html";
+});
+
+
+function createHighScore() {
+    initialEntry = document.querySelector("#inputInitials").value;
+
+    var entry = {
+        name: initialEntry,
+        quizScore: currentScore
+    };
+
+    // Adds the entry array to the leaderBoard
+    leaderBoard.push(entry);
+
+    // Adds entry to array
+    localStorage.setItem("leaderBoard", JSON.stringify(leaderBoard));
+
+}
+
+
+
+// Sort the high scores
+console.log(leaderBoard);
+leaderBoard.sort(function (a, b) {
+    return b.quizScore - a.quizScore;
+})
+
+// Display to modal
+for (var l = 0; l < leaderBoard.length; l++) {
+    var addEntry = document.createElement("li");
+    addEntry.textContent = leaderBoard[l].name + ": " + leaderBoard[l].quizScore;
+    leaderBoardList.appendChild(addEntry);
+}
+
+resetResultsBtn.addEventListener("click", function () {
+    localStorage.clear();
+})
+
