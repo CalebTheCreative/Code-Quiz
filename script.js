@@ -130,8 +130,6 @@ function createHighScore() {
 
 }
 
-
-
 // Sort the high scores
 console.log(leaderBoard);
 leaderBoard.sort(function (a, b) {
