@@ -151,6 +151,7 @@ for (var l = 0; l < leaderBoard.length; l++) {
     leaderBoardList.appendChild(addEntry);
 }
 
+// How to clear out the high score list
 resetResultsBtn.addEventListener("click", function () {
     localStorage.clear();
 })

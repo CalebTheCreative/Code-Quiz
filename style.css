@@ -11,3 +11,10 @@
     padding-top: auto;
     padding-bottom: auto;
 }
+
+#endContainer {
+    width: 1000px;
+    height: auto;
+    padding-top: auto;
+    padding-bottom: auto;
+}
