@@ -69,12 +69,13 @@ function displayQuestions() {
     // Grabs the correct answer for the questionsList array
     correctChoice = questionsList[qNum].answer;
 
-
 }
 
+// Creates event listener for each choice clicked
 choicesInfo.addEventListener("click", function (event) {
     answerStatusDisplayEl
 
+    // In the event of a correct answer
     if (correctChoice === event.target.textContent) {
         answerStatusDisplayEl.innerHTML = "correct";
         setTimeout(hideAnswer, 1500);
@@ -82,12 +83,15 @@ choicesInfo.addEventListener("click", function (event) {
         currentScore++;
     }
 
+    // In the event of a wrong answer
     else {
         answerStatusDisplayEl.innerHTML = "incorrect";
         setTimeout(hideAnswer, 1500);
         showAnswer();
         secondsLeft = secondsLeft - 5;
     }
+
+    // Loop through to next question
     displayQuestions();
 })
 
