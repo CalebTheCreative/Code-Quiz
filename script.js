@@ -104,13 +104,14 @@ function hideAnswer() {
     answerStatusDisplayEl.classList.add("d-none");
 }
 
-
+// Changes containers from quiz to final result
 function endGame() {
     quizBox.classList.add("d-none");
     endBox.classList.remove("d-none");
     finalScoreEl.textContent = currentScore;
 }
 
+// Event listener to reset the game as soon as initials are entered
 initialsBtn.addEventListener("click", function () {
     createHighScore();
     window.location.href = "index.html";
