@@ -25,7 +25,6 @@ var initialEntry;
 // Make Start Button Start the Game
 startBtnEl.addEventListener("click", startQuiz);
 
-
 function startQuiz() {
 
     // Change Container Display to quizBox
@@ -140,6 +139,7 @@ leaderBoard.sort(function (a, b) {
 for (var l = 0; l < leaderBoard.length; l++) {
     var addEntry = document.createElement("li");
     addEntry.textContent = leaderBoard[l].name + ": " + leaderBoard[l].quizScore;
+    addEntry.classList.add("font-weight-bold");
     leaderBoardList.appendChild(addEntry);
 }
 
