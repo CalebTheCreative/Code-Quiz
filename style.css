@@ -18,3 +18,11 @@
     padding-top: auto;
     padding-bottom: auto;
 }
+
+#titleHeader {
+    font-size: 50px;
+}
+
+#timer {
+    font-size: 35px;
+}
