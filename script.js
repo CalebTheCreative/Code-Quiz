@@ -117,10 +117,11 @@ initialsBtn.addEventListener("click", function () {
     window.location.href = "index.html";
 });
 
-
+// High Score Function
 function createHighScore() {
     initialEntry = document.querySelector("#inputInitials").value;
 
+    // Creates entry object
     var entry = {
         name: initialEntry,
         quizScore: currentScore
@@ -136,6 +137,8 @@ function createHighScore() {
 
 // Sort the high scores
 console.log(leaderBoard);
+
+// How to sort through high score to ensure they are in order
 leaderBoard.sort(function (a, b) {
     return b.quizScore - a.quizScore;
 })
